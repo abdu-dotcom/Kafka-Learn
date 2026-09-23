@@ -12,13 +12,12 @@ public class KafkaProducerService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendMessage(Product message){
+    public void sendMessage(String message){
         kafkaTemplate.send("first-topic", message);
 
         log.info("====================================");
         log.info("Message Sent : {}", message);
         log.info("====================================");
 
-        insert dba message.getId,
     }
 }
