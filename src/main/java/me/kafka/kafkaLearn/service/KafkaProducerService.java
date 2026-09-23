@@ -13,11 +13,31 @@ public class KafkaProducerService {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     public void sendMessage(String message){
-        kafkaTemplate.send("first-topic", message);
+        kafkaTemplate.send("rebalance-topic","rebalance-group", message);
 
         log.info("====================================");
         log.info("Message Sent : {}", message);
         log.info("====================================");
+    }
 
+    public void sendManyMessages() {
+
+        for (int i = 1; i <= 20; i++) {
+
+            int partition = i % 2;
+
+            kafkaTemplate.send(
+                    "rebalance-topic",
+                    partition,
+                    null,
+                    "Message-" + i
+            );
+
+            log.info(
+                    "Sent Message-{} to partition {}",
+                    i,
+                    partition
+            );
+        }
     }
 }
